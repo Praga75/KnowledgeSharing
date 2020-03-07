@@ -23,7 +23,7 @@ namespace KnowledgeSharing.Repositories
         public AnswersRepository()
         {
             knowledgesharingDB = new KnowledgeSharingDbContext();
-            questionRepository = new QuestionsRepository();
+            questionRepository = new QuestionsRepository(); 
             votesRepository = new VotesRepository();
         }
 
