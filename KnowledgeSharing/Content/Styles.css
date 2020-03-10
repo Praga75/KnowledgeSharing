@@ -1,0 +1,31 @@
+﻿.navbar {
+    background-color:indianred;
+}
+
+#active {
+  color:lightgreen;
+}
+
+.navbar a:link, .navbar a:visited {
+    color: white !important;
+}
+
+.navbar a:hover {
+    color: #0dedd1 !important;
+   
+}
+
+.dropdown-menu a:hover {
+    color: black !important;
+}
+
+.hidden {
+    display: none;
+}
+
+.login-box {
+    border-radius: 5em;
+    box-shadow: 0em 0em 2em 2em black;
+    margin-top: 100em;
+    padding: 40em;
+}
