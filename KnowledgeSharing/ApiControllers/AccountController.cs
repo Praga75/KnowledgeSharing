@@ -13,7 +13,7 @@ namespace KnowledgeSharing.ApiControllers
             this.userService = userService;
         }
 
-        public string Get(string Email)
+        public string GetIDPresentOrNot(string Email)
         {
             if (this.userService.GetUsersByEmail(Email) != null)
             {

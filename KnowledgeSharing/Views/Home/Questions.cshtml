@@ -1,0 +1,25 @@
+﻿@model List<KnowledgeSharing.ViewModels.QuestionViewModel>
+@{
+    ViewBag.Title = "Home";
+}
+
+
+<div class="row">
+    <div class="col-sm-12"></div>
+    <table class="table">
+        @foreach (var items in Model)
+        {
+            Html.RenderPartial("_Question", items);
+        }
+    </table>
+    <div>
+        @if (Session["CurrentUserName"] != null)
+        {
+            <a href="/question/create" class="btn btn-primary">Add Question</a>
+        }
+    </div>
+</div>
+
+<script>
+    $("a[href='/home/questions']").attr("id", "active");
+</script>

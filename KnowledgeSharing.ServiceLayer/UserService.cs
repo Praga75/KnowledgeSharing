@@ -97,7 +97,7 @@ namespace KnowledgeSharing.ServiceLayer
         {
             User user = userRepository.GetUsersbyUserID(UserID).FirstOrDefault();
             UserViewModel userVM = null;
-            if (userVM != null)
+            if (user != null)
             {
                 var config = new MapperConfiguration(cfg => { cfg.CreateMap<User, UserViewModel>(); cfg.IgnoreUnmapped(); });
                 IMapper mapper = config.CreateMapper();

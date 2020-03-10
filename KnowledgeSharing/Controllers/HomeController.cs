@@ -11,10 +11,12 @@ namespace KnowledgeSharing.Controllers
     public class HomeController : Controller
     {
         IQuestionsService questionService;
+        ICategoriesService categoriesService;
 
-        public HomeController(IQuestionsService questionService)
+        public HomeController(IQuestionsService questionService,ICategoriesService categoriesService)
         {
             this.questionService = questionService;
+            this.categoriesService = categoriesService;
         }
             
         public ActionResult Index()
@@ -29,6 +31,17 @@ namespace KnowledgeSharing.Controllers
         public ActionResult Contact()
         {
             return View();
+        }
+        public ActionResult Categories()
+        {
+            List<CategoryViewModel> categoriesList = categoriesService.GetCategories();
+            return View(categoriesList);
+        }
+    
+        public ActionResult Questions()
+        {
+            List<QuestionViewModel> questions = questionService.GetQuestions();
+            return View(questions);
         }
     }
 }

@@ -26,7 +26,7 @@ namespace KnowledgeSharing.Repositories
         }
 
         public void InsertUser(User user)
-        {
+        { 
             knowledgesharingDB.Users.Add(user);
             knowledgesharingDB.SaveChanges();
         }

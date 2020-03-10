@@ -7,6 +7,7 @@
         <h1>Registration</h1>
         <form novalidate="novalidate" action="/account/register" method="post" class="needs-validation">
             @Html.AntiForgeryToken()
+            @Html.ValidationSummary()
             <div class="form-row">
                 <div class="form-group col-sm-12">
                     <label for="txtName">Name</label>
@@ -93,7 +94,7 @@
 
     $("#txtEmail").blur(function () {
         $.ajax({
-            url: "/api/account?email=" + $("#txtEmail").val(), type: "GET", success:
+            url: "/api/account/?email=" + $("#txtEmail").val(), type: "GET", success:
                 function (response) {
                     if (response == "Not Found") {
                         $(".email-exist").text("");

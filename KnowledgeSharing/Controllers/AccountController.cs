@@ -1,7 +1,7 @@
 ﻿using KnowledgeSharing.ServiceLayer;
 using KnowledgeSharing.ViewModels;
 using System.Web.Mvc;
-
+using System;
 namespace KnowledgeSharing.Controllers
 {
     public class AccountController : Controller
@@ -43,20 +43,20 @@ namespace KnowledgeSharing.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel lvm)
+        public ActionResult Login(LoginViewModel loginvm)
         {
             if (ModelState.IsValid)
             {
-                UserViewModel uvm = this.userService.GetUsersByEmailAndPassword(lvm.Email, lvm.Password);
-                if (uvm != null)
+                UserViewModel uservm = this.userService.GetUsersByEmailAndPassword(loginvm.Email, loginvm.Password);
+                if (uservm != null)
                 {
-                    Session["CurrentUserID"] = uvm.UserID;
-                    Session["CurrentUserName"] = uvm.Name;
-                    Session["CurrentUserEmail"] = uvm.Email;
-                    Session["CurrentUserPassword"] = uvm.Password;
-                    Session["CurrentUserIsAdmin"] = uvm.IsAdmin;
+                    Session["CurrentUserID"] = uservm.UserID;
+                    Session["CurrentUserName"] = uservm.Name;
+                    Session["CurrentUserEmail"] = uservm.Email;
+                    Session["CurrentUserPassword"] = uservm.Password;
+                    Session["CurrentUserIsAdmin"] = uservm.IsAdmin;
 
-                    if (uvm.IsAdmin)
+                    if (uservm.IsAdmin)
                     {
                         return RedirectToRoute(new { controller = "Home", action = "Index" });
                     }
@@ -68,15 +68,72 @@ namespace KnowledgeSharing.Controllers
                 else
                 {
                     ModelState.AddModelError("x", "Invalid Email / Password");
-                    return View(lvm);
+                    return View(loginvm);
                 }
             }
             else
             {
                 ModelState.AddModelError("x", "Invalid Data");
-                return View(lvm);
+                return View(loginvm);
             }
         }
 
+        public ActionResult Logout()
+        {
+            Session.Abandon();
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult ChangeProfile()
+        {
+            int userid = Convert.ToInt32(Session["CurrentUserID"]);
+            UserViewModel uvm = this.userService.GetUsersByUserID(userid);
+            EditUserDetailsViewModel editvm = new EditUserDetailsViewModel() { Name = uvm.Name, Email = uvm.Email, Mobile = uvm.Mobile, UserID = uvm.UserID };
+            return View(editvm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+       
+        public ActionResult ChangeProfile(EditUserDetailsViewModel eudvm)
+        {
+            if (ModelState.IsValid)
+            {
+                eudvm.UserID = Convert.ToInt32(Session["CurrentUserID"]);
+                this.userService.UpdateUserDetails(eudvm);
+                Session["CurrentUserName"] = eudvm.Name;
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("x", "Invalid data");
+                return View(eudvm);
+            }
+        }
+        public ActionResult ChangePassword()
+        {
+            int userid = Convert.ToInt32(Session["CurrentUserID"]);
+            UserViewModel uservm = this.userService.GetUsersByUserID(userid);
+            EditUserPasswordViewModel editvm = new EditUserPasswordViewModel() { Email = uservm.Email, Password = "" , ConfirmPassword="", UserID = uservm.UserID };
+            return View(editvm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult ChangePassword(EditUserPasswordViewModel editvm)
+        {
+            if (ModelState.IsValid)
+            {
+                editvm.UserID = Convert.ToInt32(Session["CurrentUserID"]);
+                this.userService.UpdateUserPassword(editvm);
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                ModelState.AddModelError("x", "Invalid data");
+                return View(editvm);
+            }
+        }
     }
 }
