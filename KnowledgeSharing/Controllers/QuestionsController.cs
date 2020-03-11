@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using KnowledgeSharing.ServiceLayer;
 using KnowledgeSharing.ViewModels;
-
+using KnowledgeSharing.CustomFilters;
 
 namespace KnowledgeSharing.Controllers
 {
@@ -31,7 +31,7 @@ namespace KnowledgeSharing.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        
+        [UserAuthorizationFilterAttribute]
         public ActionResult AddAnswer(NewAnswerViewModel navm)
         {
             navm.UserID = Convert.ToInt32(Session["CurrentUserID"]);
@@ -51,6 +51,7 @@ namespace KnowledgeSharing.Controllers
         }
 
         [HttpPost]
+        [UserAuthorizationFilterAttribute]
         public ActionResult EditAnswer(EditAnswerViewModel avm)
         {
             if (ModelState.IsValid)
@@ -65,7 +66,7 @@ namespace KnowledgeSharing.Controllers
                 return RedirectToAction("View", new { id = avm.QuestionID });
             }
         }
-
+        [UserAuthorizationFilterAttribute]
         public ActionResult Create()
         {
             List<CategoryViewModel> categories = this.categoriesService.GetCategories();

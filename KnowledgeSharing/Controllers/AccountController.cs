@@ -2,6 +2,7 @@
 using KnowledgeSharing.ViewModels;
 using System.Web.Mvc;
 using System;
+using KnowledgeSharing.CustomFilters;
 namespace KnowledgeSharing.Controllers
 {
     public class AccountController : Controller
@@ -83,7 +84,7 @@ namespace KnowledgeSharing.Controllers
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
-
+        [UserAuthorizationFilterAttribute]
         public ActionResult ChangeProfile()
         {
             int userid = Convert.ToInt32(Session["CurrentUserID"]);
@@ -94,7 +95,7 @@ namespace KnowledgeSharing.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-       
+        [UserAuthorizationFilterAttribute]       
         public ActionResult ChangeProfile(EditUserDetailsViewModel eudvm)
         {
             if (ModelState.IsValid)
@@ -110,6 +111,7 @@ namespace KnowledgeSharing.Controllers
                 return View(eudvm);
             }
         }
+        [UserAuthorizationFilterAttribute]
         public ActionResult ChangePassword()
         {
             int userid = Convert.ToInt32(Session["CurrentUserID"]);
@@ -120,7 +122,7 @@ namespace KnowledgeSharing.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
+        [UserAuthorizationFilterAttribute]
         public ActionResult ChangePassword(EditUserPasswordViewModel editvm)
         {
             if (ModelState.IsValid)
