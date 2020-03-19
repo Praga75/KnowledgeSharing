@@ -11,3 +11,10 @@
 .navbar a:hover {
     color: #0dedd1 !important;
 }
+/*.hidden{
+    display : none;
+}*/
+.row.content {
+    padding-right: 15px;
+    padding-left: 15px;
+}

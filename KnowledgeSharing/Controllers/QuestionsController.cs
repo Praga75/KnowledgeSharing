@@ -95,9 +95,10 @@ namespace KnowledgeSharing.Controllers
                 return View();
             }
         }
-        //public void Post(int AnswerID, int UserID, int value)
-        //{
-        //    this.answersService.UpdateAnswerVotesCount(AnswerID, UserID, value);
-        //}
+        [NonAction]
+        public void UpdateCount(int AnswerID, int UserID, int value)
+        {
+            this.answersService.UpdateAnswerVotesCount(AnswerID, UserID, value);
+        }
     }
 }

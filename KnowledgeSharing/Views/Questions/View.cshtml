@@ -82,35 +82,33 @@
                     else
                     {
                         <p class="answer">@Model.Answers[i].AnswerText</p>
-                        <button class="btn btn-info editbutton">Edit</button>
+                        <button class="btn btn-info editbutton" onclick="displayForm()">Edit</button>
 
-                        <form class="needs-validation hidden" novalidate="novalidate" action="/questions/editanswer" method="post" id="editForm">
-                            <div class="form-group form-row">
-                                <div class="col-sm-12">
-                                    <h4>Edit your answer</h4>
+                        <div id="editContent" style="display:none">
+                            <form action="/questions/editanswer" method="post" id="editForm">
+                                <div class="form-group form-row">
+                                    <div class="col-sm-12">
+                                        <h4>Edit your answer</h4>
 
-                                    @Html.AntiForgeryToken()
-                                    <input type="hidden" name="AnswerID" value="@Model.Answers[i].AnswerID" />
-                                    <input type="hidden" name="QuestionID" value="@Model.Answers[i].QuestionID" />
-                                    <div class="form-row">
-                                        <div class="form-group col-sm-12">
-                                            <textarea class="form-control" id="txtAnswer" placeholder="Enter answer" name="AnswerText" required="required">@Model.Answers[i].AnswerText</textarea>
-                                            <div class="valid-feedback">
-                                                Looks good!
-                                            </div>
-                                            <div class="invalid-feedback">
-                                                Please enter answer.
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="AnswerID" value="@Model.Answers[i].AnswerID" />
+                                        <input type="hidden" name="QuestionID" value="@Model.Answers[i].QuestionID" />
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-12">
+                                                <textarea class="form-control" id="EditAnswer" placeholder="Enter answer" name="AnswerText" onchange="validateEditAnswer()" required="required">@Model.Answers[i].AnswerText</textarea>
+                                                <span id="checkEditAnswer">
+                                                </span>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <button type="submit" class="btn btn-primary" data-formid="editForm">Update Answer</button>
-                                    <div class="text-danger">
-                                        @Html.ValidationSummary()
+                                        <button type="submit" class="btn btn-primary" data-formid="editForm">Update Answer</button>
+                                        <div class="text-danger">
+                                            @Html.ValidationSummary()
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     }
                 </div>
 
@@ -141,13 +139,9 @@
                         <input type="hidden" name="QuestionID" value="@Model.QuestionID" />
                         <div class="form-row">
                             <div class="form-group col-sm-12">
-                                <textarea class="form-control" id="txtAnswer" placeholder="Enter answer" name="AnswerText" required="required" data-pattern="[A-z0-9 ,-]{1,}"></textarea>
-                                <div class="valid-feedback">
-                                    Looks good!
-                                </div>
-                                <div class="invalid-feedback">
-                                    Please enter answer.
-                                </div>
+                                <textarea class="form-control" id="Answer" placeholder="Enter answer" name="AnswerText" required="required" onchange="validateAnswer()"></textarea>
+                                <span id="checkAnswer">
+                                </span>
                             </div>
                         </div>
 
@@ -176,7 +170,7 @@
                 value = 2;
 
             $.ajax({
-                url: "/api/questions?answerid=" + UpBtn.attr("data-answerid") + "&value=" + value + "&UserID=@Session["CurrentUserID"]", type: "POST", success: function ()
+                url: "@Url.Action("UpdateCount")?answerid=" + UpBtn.attr("data-answerid") + "&value=" + value + "&UserID=@Session["CurrentUserID"]", success: function ()
                 {
                     UpBtn.parent().find(".votescount").text(parseInt(UpBtn.parent().find(".votescount").text()) + value);
                     UpBtn.attr("src", "/Images/up-color.png");
@@ -199,7 +193,7 @@
                 value = -2;
 
             $.ajax({
-                url: "/api/questions?answerid=" + UpBtn.attr("data-answerid") + "&value=" + value + "&UserID=@Session["CurrentUserID"]", type: "POST", success: function ()
+                url: "@Url.Action("UpdateCount")?answerid=" + UpBtn.attr("data-answerid") + "&value=" + value + "&UserID=@Session["CurrentUserID"]",success: function ()
                 {
                     DownBtn.parent().find(".votescount").text(parseInt(DownBtn.parent().find(".votescount").text()) + value);
                     DownBtn.attr("src", "/Images/down-color.png");
@@ -208,14 +202,6 @@
             });
         }
     });
-</script>
 
-<script>
-    $(".editbutton").click(function ()
-    {
-        $(this).parent().find(".needs-validation").show();
-        $(this).hide();
-        $(this).parent().find(".answer").hide();
-    });
 </script>
 

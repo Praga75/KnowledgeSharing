@@ -36,7 +36,7 @@ function validatePassword() {
         password.innerHTML = "<span style='color: red;'>Invalid Password<br>" +
             "At least one lower case letter,<br>" +
             "At least one upper case letter,<br>" +
-            "At least one number,<br>At least 8 characters length</span > ";
+            "At least one number,<br>At least 6 characters length</span > ";
     }
     else {
         password.innerHTML = "<span style='color: green;'>Looks good!</span>";
@@ -51,5 +51,56 @@ function validateConfirmPassword() {
     }
     else {
         confirmpassword.innerHTML = "<span style='color: green;'>Looks good!</span>";
+    }
+}
+function validateAnswer() {
+    var pattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{1,}$/g;
+    var answer = document.getElementById("Answer").value;
+    if (!answer.match(pattern)) {
+        checkAnswer.innerHTML = "<span style='color: red;'>Please enter your answer.</span>";
+    }
+    else {
+        checkAnswer.innerHTML = "<span style='color: green;'>Looks good!</span>";
+    }
+}
+function validateEditAnswer() {
+    var pattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{1,}$/g;
+    var answer = document.getElementById("EditAnswer").value;
+    if (!answer.match(pattern)) {
+        checkEditAnswer.innerHTML = "<span style='color: red;'>Please enter your answer.</span>";
+    }
+    else {
+        checkEditAnswer.innerHTML = "<span style='color: green;'>Looks good!</span>";
+    }
+}
+function displayForm() {
+    var x = document.getElementById("editContent");
+    if (x.style.display === "none") {
+        x.style.display = "block";
+    }
+    else {
+        x.style.display = "none";
+    }
+}
+
+function validateQuestion() {
+    var pattern = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-]{1,}$/g;
+    var name = document.getElementById("QuestionName").value;
+    if (!name.match(pattern)) {
+        checkQuestion.innerHTML = "<span style='color: red;'>Invalid Question</span>";
+    }
+    else {
+        checkQuestion.innerHTML = "<span style='color: green;'>Looks good!</span>";
+    }
+}
+
+
+function validateCategory() {
+    var category = document.getElementById("drpCategory").value;
+    if (category == null) {
+        checkQuestion.innerHTML = "<span style='color: red;'>Category can't be empty</span>";
+    }
+    else {
+        checkQuestion.innerHTML = "<span style='color: green;'>Looks good!</span>";
     }
 }
