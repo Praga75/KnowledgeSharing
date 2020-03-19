@@ -53,5 +53,3 @@ function validateConfirmPassword() {
         confirmpassword.innerHTML = "<span style='color: green;'>Looks good!</span>";
     }
 }
-
-

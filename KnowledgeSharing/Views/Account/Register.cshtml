@@ -8,7 +8,7 @@
         <h1>Registration</h1>
         <form action="/account/register" method="post">
             @Html.AntiForgeryToken()
-            @Html.ValidationSummary()
+
             <div class="form-row">
                 <div class="form-group col-sm-12">
                     <label for="txtName">Name</label>
@@ -22,6 +22,7 @@
                 <div class="form-group col-sm-6">
                     <label for="txtEmail">Email</label>
                     <input type="email" class="form-control" id="Email" placeholder="Email" name="Email" required="required" onchange="validateEmail()" />
+                    @Html.ValidationMessage("x",new { @class = "text-danger" })
                     <span id="mailId">
                     </span>
                 </div>

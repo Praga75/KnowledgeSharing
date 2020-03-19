@@ -20,21 +20,23 @@ namespace KnowledgeSharing.Controllers
         [HttpPost]
         public ActionResult Register(RegisterViewModel registervm)
         {
-            if (ModelState.IsValid)
-            {
-                int userid = this.userService.InsertUser(registervm);
-                Session["CurrentUserID"] = userid;
-                Session["CurrentUserName"] = registervm.Name;
-                Session["CurrentUserEmail"] = registervm.Email;
-                Session["CurrentUserPassword"] = registervm.Password;
-                Session["CurrentUserIsAdmin"] = false;
-                return RedirectToAction("Index", "Home");
-            }
-            else
-            {
-                ModelState.AddModelError("x", "Invalid data");
-                return View();
-            }
+          
+                if (ModelState.IsValid && !GetIDPresentOrNot(registervm.Email))
+                {
+                    int userid = this.userService.InsertUser(registervm);
+                    Session["CurrentUserID"] = userid;
+                    Session["CurrentUserName"] = registervm.Name;
+                    Session["CurrentUserEmail"] = registervm.Email;
+                    Session["CurrentUserPassword"] = registervm.Password;
+                    Session["CurrentUserIsAdmin"] = false;
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("x","Invalid Data");
+                    return View();
+                }
+
         }
         public ActionResult Login()
         {
@@ -89,7 +91,8 @@ namespace KnowledgeSharing.Controllers
         {
             int userid = Convert.ToInt32(Session["CurrentUserID"]);
             UserViewModel uvm = this.userService.GetUsersByUserID(userid);
-            EditUserDetailsViewModel editvm = new EditUserDetailsViewModel() { Name = uvm.Name, Email = uvm.Email, Mobile = uvm.Mobile, UserID = uvm.UserID };
+            EditUserDetailsViewModel editvm = new EditUserDetailsViewModel() 
+            { Name = uvm.Name, Email = uvm.Email, Mobile = uvm.Mobile, UserID = uvm.UserID };
             return View(editvm);
         }
 
@@ -116,7 +119,8 @@ namespace KnowledgeSharing.Controllers
         {
             int userid = Convert.ToInt32(Session["CurrentUserID"]);
             UserViewModel uservm = this.userService.GetUsersByUserID(userid);
-            EditUserPasswordViewModel editvm = new EditUserPasswordViewModel() { Email = uservm.Email, Password = "" , ConfirmPassword="", UserID = uservm.UserID };
+            EditUserPasswordViewModel editvm = new EditUserPasswordViewModel()
+            { Email = uservm.Email, Password = "" , ConfirmPassword="", UserID = uservm.UserID };
             return View(editvm);
         }
 
@@ -135,6 +139,18 @@ namespace KnowledgeSharing.Controllers
             {
                 ModelState.AddModelError("x", "Invalid data");
                 return View(editvm);
+            }
+        }
+        [NonAction]
+        public bool GetIDPresentOrNot(string Email)
+        {
+            if (this.userService.GetUsersByEmail(Email) != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

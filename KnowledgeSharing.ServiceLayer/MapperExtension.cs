@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 namespace KnowledgeSharing.ServiceLayer
 {
-    public static class MapperExtensions 
+    public static class MapperExtensions
     {
         private static void IgnoreUnmappedProperties(TypeMap map, IMappingExpression expr)
         {
@@ -17,6 +17,7 @@ namespace KnowledgeSharing.ServiceLayer
                 }
             }
         }
+
         public static void IgnoreUnmapped(this IProfileExpression profile)
         {
             profile.ForAllMaps(IgnoreUnmappedProperties);

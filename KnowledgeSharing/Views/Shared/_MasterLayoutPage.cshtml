@@ -7,9 +7,9 @@
     <meta charset="utf-8" />
     <title>@ViewBag.Title - KnowledgeSharing</title>
     @Styles.Render("~/Styles/bootstrap")
-    <link href="~/Content/Styles.css" rel="stylesheet" type="text/css"/>
-    <script src="~/Scripts/CustomValidation.js"> </script>
-
+    @Styles.Render("~/Styles/site")
+    @Scripts.Render("~/Scripts/bootstrap")
+    <script src="~/Scripts/CustomScript/CustomValidation.js"></script>
 </head>
 <body>
     <div class="container-fluid">
@@ -47,13 +47,6 @@
                 }
                 @if (Session["CurrentUserName"] != null)
                 {
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home/categories">Categories</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/home/questions">Questions</a>
-                    </li>
-
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
                             <img src="~/Images/user.png" width="20px" />
