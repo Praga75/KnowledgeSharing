@@ -5,6 +5,7 @@ using System;
 using KnowledgeSharing.CustomFilters;
 namespace KnowledgeSharing.Controllers
 {
+    [CustomExceptionFilter]
     public class AccountController : Controller
     {
         IUsersService userService;

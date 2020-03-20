@@ -9,6 +9,7 @@ using KnowledgeSharing.CustomFilters;
 
 namespace KnowledgeSharing.Controllers
 {
+    [CustomExceptionFilter]
     public class QuestionsController : Controller
     {
         IQuestionsService questionsService;

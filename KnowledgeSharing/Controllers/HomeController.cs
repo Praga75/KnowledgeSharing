@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using KnowledgeSharing.CustomFilters;
 using KnowledgeSharing.ServiceLayer;
 using KnowledgeSharing.ViewModels;
 
 namespace KnowledgeSharing.Controllers
 {
+    [CustomExceptionFilter]
     public class HomeController : Controller
     {
         IQuestionsService questionService;

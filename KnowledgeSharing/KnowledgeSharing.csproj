@@ -147,6 +147,7 @@
     <Content Include="Images\down-color.png" />
     <Content Include="Images\down-empty.png" />
     <Content Include="Images\map.svg" />
+    <Content Include="Images\SomethingWentWrong.jpg" />
     <Content Include="Images\up-color.png" />
     <Content Include="Images\up-empty.png" />
     <Content Include="Images\user.png" />
@@ -180,8 +181,10 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="CustomFilters\CustomExceptionFilter.cs" />
     <Compile Include="CustomFilters\UserAuthorizationFilterAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,6 +209,7 @@
     <Content Include="Views\Questions\View.cshtml" />
     <Content Include="Views\Questions\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="Views\Error\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
